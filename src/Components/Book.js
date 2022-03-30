@@ -1,7 +1,7 @@
 import React from "react";
 import BookShelfChanger from "./BookShelfChanger";
 
-function Book({ cover, title, author }) {
+function Book({ cover, title, author, bookShelf, handleShelfChange, id }) {
   return (
     <li>
       <div className="book">
@@ -14,7 +14,11 @@ function Book({ cover, title, author }) {
               backgroundImage: `url("${cover}")`,
             }}
           />
-          <BookShelfChanger />
+          <BookShelfChanger
+            id={id}
+            bookShelf={bookShelf}
+            handleShelfChange={handleShelfChange}
+          />
         </div>
         <div className="book-title">{title}</div>
         <div className="book-authors">{author}</div>
