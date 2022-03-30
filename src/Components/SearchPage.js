@@ -1,26 +1,51 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Book from "./Book";
 
-function SearchPage({ setShow }) {
+function SearchPage({
+  setShow,
+  query,
+  handleQuery,
+  handleSubmit,
+  searchBooks,
+}) {
   return (
     <div className="search-books">
-      <div className="search-books-bar">
-        <button className="close-search" onClick={() => setShow(false)}>
-          Close
-        </button>
+      <form onSubmit={handleSubmit} className="search-books-bar">
+        <Link to="/">
+          <button
+            type="button"
+            className="close-search"
+            onClick={() => setShow(false)}
+          >
+            Close
+          </button>
+        </Link>
         <div className="search-books-input-wrapper">
-          {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-          <input type="text" placeholder="Search by title or author" />
+          <input
+            type="text"
+            placeholder="Search by title or author"
+            value={query}
+            onChange={handleQuery}
+          />
         </div>
-      </div>
+        <button type="submit">Search</button>
+      </form>
+
       <div className="search-books-results">
-        <ol className="books-grid" />
+        <ol className="books-grid">
+          {searchBooks &&
+            searchBooks.map((book) => {
+              return (
+                <Book
+                  key={book.id}
+                  cover={() => book.imageLinks.thumbnail || book.imageLinks}
+                  title={book.title}
+                  author={book.author}
+                />
+              );
+            })}
+        </ol>
       </div>
     </div>
   );
